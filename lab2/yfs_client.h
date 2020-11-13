@@ -13,7 +13,6 @@ class yfs_client
 {
   extent_client *ec;
   lock_client *lc;
- public:
 
 public:
   typedef unsigned long long inum;
@@ -62,8 +61,10 @@ public:
 
   int setattr(inum, size_t);
   int lookup(inum, const char *, bool &, inum &);
+  int lookup_nlock(inum, const char *, bool &, inum &);
   int create(inum, const char *, mode_t, inum &);
   int readdir(inum, std::list<dirent> &);
+  int readdir_nlock(inum, std::list<dirent> &);
   int write(inum, size_t, off_t, const char *, size_t &);
   int read(inum, size_t, off_t, std::string &);
   int unlink(inum, const char *);

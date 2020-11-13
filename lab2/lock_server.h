@@ -10,21 +10,27 @@
 #include "lock_client.h"
 #include "rpc.h"
 
-class lock_server {
+class lock_server
+{
 
- protected:
+protected:
   int nacquire;
-  enum status{FREE,LOCKED};
+  enum status
+  {
+    FREE,
+    LOCKED
+  };
   std::map<lock_protocol::lockid_t, status> lock_status;
 
   static pthread_mutex_t mutex;
   static pthread_cond_t cond;
- public:
+
+public:
   lock_server();
-  ~lock_server() {};
+  ~lock_server(){};
   lock_protocol::status stat(int clt, lock_protocol::lockid_t lid, int &);
   lock_protocol::status acquire(int clt, lock_protocol::lockid_t lid, int &);
   lock_protocol::status release(int clt, lock_protocol::lockid_t lid, int &);
 };
 
-#endif 
+#endif

@@ -18,7 +18,7 @@ class disk {
  private:
   unsigned char blocks[BLOCK_NUM][BLOCK_SIZE];
 
- public:
+public:
   disk();
   void read_block(uint32_t id, char *buf);
   void write_block(uint32_t id, const char *buf);

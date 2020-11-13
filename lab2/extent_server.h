@@ -8,8 +8,9 @@
 #include "extent_protocol.h"
 #include "inode_manager.h"
 
-class extent_server {
- protected:
+class extent_server
+{
+protected:
 #if 0
   typedef struct extent {
     std::string data;
@@ -19,7 +20,7 @@ class extent_server {
 #endif
   inode_manager *im;
 
- public:
+public:
   extent_server();
 
   int create(uint32_t type, extent_protocol::extentid_t &id);
@@ -29,11 +30,4 @@ class extent_server {
   int remove(extent_protocol::extentid_t id, int &);
 };
 
-#endif 
-
-
-
-
-
-
-
+#endif

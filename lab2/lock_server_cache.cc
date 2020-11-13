@@ -98,9 +98,9 @@ int lock_server_cache::acquire(lock_protocol::lockid_t lid, std::string id, int 
       int r = cl->call(rlock_protocol::revoke, lid, r);
       pthread_mutex_lock(&mutex);
       if (r != rlock_protocol::OK)
-  		{
-  			printf("rlock error\n");
-  		}
+      {
+        printf("rlock error\n");
+      }
     }
     else
     {
@@ -157,9 +157,9 @@ int lock_server_cache::release(lock_protocol::lockid_t lid, std::string id, int 
       int r = cl->call(rlock_protocol::retry, lid, r);
       pthread_mutex_lock(&mutex);
       if (r != rlock_protocol::OK)
-  		{
-  			printf("rlock error\n");
-  		}
+      {
+        printf("rlock error\n");
+      }
     }
     else
     {

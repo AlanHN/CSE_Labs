@@ -61,7 +61,20 @@ getattr(yfs_client::inum inum, struct stat &st)
         st.st_size = info.size;
         printf("   getattr -> %llu\n", info.size);
     }
-    else if (yfs->issymlink(inum))
+    else if (yfs->isdir(inum))
+    {
+        yfs_client::dirinfo info;
+        ret = yfs->getdir(inum, info);
+        if (ret != yfs_client::OK)
+            return ret;
+        st.st_mode = S_IFDIR | 0777;
+        st.st_nlink = 2;
+        st.st_atime = info.atime;
+        st.st_mtime = info.mtime;
+        st.st_ctime = info.ctime;
+        printf("   getattr -> %lu %lu %lu\n", info.atime, info.mtime, info.ctime);
+    }
+    else
     {
         yfs_client::fileinfo info;
         ret = yfs->getfile(inum, info);
@@ -74,19 +87,6 @@ getattr(yfs_client::inum inum, struct stat &st)
         st.st_ctime = info.ctime;
         st.st_size = info.size;
         printf("   getattr -> %llu\n", info.size);
-    }
-    else
-    {
-        yfs_client::dirinfo info;
-        ret = yfs->getdir(inum, info);
-        if (ret != yfs_client::OK)
-            return ret;
-        st.st_mode = S_IFDIR | 0777;
-        st.st_nlink = 2;
-        st.st_atime = info.atime;
-        st.st_mtime = info.mtime;
-        st.st_ctime = info.ctime;
-        printf("   getattr -> %lu %lu %lu\n", info.atime, info.mtime, info.ctime);
     }
     return yfs_client::OK;
 }
@@ -553,7 +553,8 @@ int main(int argc, char *argv[])
     setvbuf(stdout, NULL, _IONBF, 0);
 
 #if 1
-    if(argc != 4){
+    if (argc != 4)
+    {
         fprintf(stderr, "Usage: yfs_client <mountpoint> <port-extent-server> <port-lock-server>\n");
         exit(1);
     }
