@@ -51,5 +51,10 @@
         "xtree": "cpp",
         "xutility": "cpp",
         "ctime": "cpp"
+    },
+    "editor.quickSuggestions": {
+        "other": true,
+        "comments": true,
+        "strings": false
     }
 }
